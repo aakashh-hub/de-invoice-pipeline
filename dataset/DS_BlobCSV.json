@@ -1,0 +1,344 @@
+{
+	"name": "DS_BlobCSV",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_AzureBlobStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "invoice-container"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "subsidiary",
+				"type": "String"
+			},
+			{
+				"name": "source_system",
+				"type": "String"
+			},
+			{
+				"name": "invoice_country",
+				"type": "String"
+			},
+			{
+				"name": "mdm_bill_payer_country",
+				"type": "String"
+			},
+			{
+				"name": "invoice_id",
+				"type": "String"
+			},
+			{
+				"name": "invoice_number",
+				"type": "String"
+			},
+			{
+				"name": "invoice_type",
+				"type": "String"
+			},
+			{
+				"name": "invoice_document_type",
+				"type": "String"
+			},
+			{
+				"name": "invoice_status",
+				"type": "String"
+			},
+			{
+				"name": "invoice_date",
+				"type": "String"
+			},
+			{
+				"name": "invoice_month",
+				"type": "String"
+			},
+			{
+				"name": "line_item_id",
+				"type": "String"
+			},
+			{
+				"name": "description",
+				"type": "String"
+			},
+			{
+				"name": "external_reference",
+				"type": "String"
+			},
+			{
+				"name": "invoice_trn_id",
+				"type": "String"
+			},
+			{
+				"name": "raw_gl_account_code",
+				"type": "String"
+			},
+			{
+				"name": "trn",
+				"type": "String"
+			},
+			{
+				"name": "trn_raw",
+				"type": "String"
+			},
+			{
+				"name": "trn_1",
+				"type": "String"
+			},
+			{
+				"name": "trn_2",
+				"type": "String"
+			},
+			{
+				"name": "trn_3",
+				"type": "String"
+			},
+			{
+				"name": "trn_4",
+				"type": "String"
+			},
+			{
+				"name": "trn_5",
+				"type": "String"
+			},
+			{
+				"name": "trn_6",
+				"type": "String"
+			},
+			{
+				"name": "raw_referrer_id",
+				"type": "String"
+			},
+			{
+				"name": "raw_referrer_name",
+				"type": "String"
+			},
+			{
+				"name": "raw_referrer_type",
+				"type": "String"
+			},
+			{
+				"name": "mdm_referrer_id",
+				"type": "String"
+			},
+			{
+				"name": "mdm_referrer_name",
+				"type": "String"
+			},
+			{
+				"name": "global_referrer_id",
+				"type": "String"
+			},
+			{
+				"name": "global_referrer_name",
+				"type": "String"
+			},
+			{
+				"name": "raw_bill_payer_id",
+				"type": "String"
+			},
+			{
+				"name": "raw_bill_payer_name",
+				"type": "String"
+			},
+			{
+				"name": "raw_bill_payer_type",
+				"type": "String"
+			},
+			{
+				"name": "mdm_bill_payer_id",
+				"type": "String"
+			},
+			{
+				"name": "mdm_bill_payer_name",
+				"type": "String"
+			},
+			{
+				"name": "global_bill_payer_id",
+				"type": "String"
+			},
+			{
+				"name": "global_bill_payer_name",
+				"type": "String"
+			},
+			{
+				"name": "raw_role_id",
+				"type": "String"
+			},
+			{
+				"name": "raw_role",
+				"type": "String"
+			},
+			{
+				"name": "mdm_role_id",
+				"type": "String"
+			},
+			{
+				"name": "mdm_role",
+				"type": "String"
+			},
+			{
+				"name": "global_role_id",
+				"type": "String"
+			},
+			{
+				"name": "global_role",
+				"type": "String"
+			},
+			{
+				"name": "raw_billing_type_id",
+				"type": "String"
+			},
+			{
+				"name": "raw_billing_type",
+				"type": "String"
+			},
+			{
+				"name": "mdm_billing_type_id",
+				"type": "String"
+			},
+			{
+				"name": "mdm_billing_type",
+				"type": "String"
+			},
+			{
+				"name": "global_billing_type_id",
+				"type": "String"
+			},
+			{
+				"name": "global_billing_type",
+				"type": "String"
+			},
+			{
+				"name": "raw_channel_id",
+				"type": "String"
+			},
+			{
+				"name": "raw_channel",
+				"type": "String"
+			},
+			{
+				"name": "mdm_channel_id",
+				"type": "String"
+			},
+			{
+				"name": "mdm_channel",
+				"type": "String"
+			},
+			{
+				"name": "mdm_gl_account_code",
+				"type": "String"
+			},
+			{
+				"name": "global_channel_id",
+				"type": "String"
+			},
+			{
+				"name": "global_channel",
+				"type": "String"
+			},
+			{
+				"name": "net",
+				"type": "String"
+			},
+			{
+				"name": "invoice_currency",
+				"type": "String"
+			},
+			{
+				"name": "net_local_currency",
+				"type": "String"
+			},
+			{
+				"name": "local_currency",
+				"type": "String"
+			},
+			{
+				"name": "net_gbp",
+				"type": "String"
+			},
+			{
+				"name": "quantity",
+				"type": "String"
+			},
+			{
+				"name": "reference",
+				"type": "String"
+			},
+			{
+				"name": "unit_price",
+				"type": "String"
+			},
+			{
+				"name": "vat",
+				"type": "String"
+			},
+			{
+				"name": "gross",
+				"type": "String"
+			},
+			{
+				"name": "total_vat",
+				"type": "String"
+			},
+			{
+				"name": "invoice_total",
+				"type": "String"
+			},
+			{
+				"name": "created_date",
+				"type": "String"
+			},
+			{
+				"name": "updated_date",
+				"type": "String"
+			},
+			{
+				"name": "date_uploaded",
+				"type": "String"
+			},
+			{
+				"name": "department",
+				"type": "String"
+			},
+			{
+				"name": "maturity_date",
+				"type": "String"
+			},
+			{
+				"name": "closing_date",
+				"type": "String"
+			},
+			{
+				"name": "inflation_flag",
+				"type": "String"
+			},
+			{
+				"name": "is_taken_for_cube",
+				"type": "String"
+			},
+			{
+				"name": "maturity_date_updated",
+				"type": "String"
+			},
+			{
+				"name": "maturity_date_missing_flag",
+				"type": "String"
+			},
+			{
+				"name": "recurring_flag",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
