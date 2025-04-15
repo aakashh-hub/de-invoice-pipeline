@@ -7,7 +7,11 @@
 		},
 		"annotations": [],
 		"type": "SnowflakeV2Table",
-		"schema": []
+		"schema": [],
+		"typeProperties": {
+			"schema": "STAGING",
+			"table": "INVOICE"
+		}
 	},
 	"type": "Microsoft.DataFactory/factories/datasets"
 }
