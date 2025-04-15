@@ -1,0 +1,9 @@
+{
+	"name": "ADF-JMA-PROD",
+	"location": "centralindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "dd7af1f2-3a01-4651-a83a-3f228a8ad711",
+		"tenantId": "95f225c3-9072-43bc-a1a7-ffb6dd3d0a35"
+	}
+}
