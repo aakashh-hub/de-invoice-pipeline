@@ -84,68 +84,12 @@
 					],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
+						"recursive": true,
 						"enablePartitionDiscovery": false
 					},
 					"formatSettings": {
 						"type": "DelimitedTextReadSettings"
 					}
-				}
-			},
-			{
-				"name": "Script to drop and create table dynamically",
-				"type": "Script",
-				"dependsOn": [
-					{
-						"activity": "SetColumnDefinitions",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"linkedServiceName": {
-					"referenceName": "LS_Snowflake",
-					"type": "LinkedServiceReference"
-				},
-				"typeProperties": {
-					"scripts": [
-						{
-							"type": "Query",
-							"text": {
-								"value": "DROP TABLE IF EXISTS STAGING.INVOICE;\n\nCREATE TABLE STAGING.INVOICE (\n  @{variables('columnDefs')},\n  SOURCE_FILE VARCHAR(255),\n  INSERTED_DATETIME TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP()\n);",
-								"type": "Expression"
-							}
-						}
-					],
-					"scriptBlockExecutionTimeout": "02:00:00"
-				}
-			},
-			{
-				"name": "SetColumnDefinitions",
-				"type": "SetVariable",
-				"dependsOn": [
-					{
-						"activity": "Get Metadata of column names",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"variableName": "columnDefs",
-					"value": "@{\n    var columns = activity('Get Metadata of column names').output.structure;\n    var columnDefinitions = '';\n    for(var i=0; i<columns.length; i++) {\n      columnDefinitions += columns[i].name + ' VARCHAR(255)';\n      if(i < columns.length-1) columnDefinitions += ',\\n  ';\n    }\n    return columnDefinitions;\n}"
 				}
 			}
 		],
