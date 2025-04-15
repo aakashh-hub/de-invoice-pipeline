@@ -10,6 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
+				"fileName": "invoices_dataset.csv",
 				"container": "invoice-container"
 			},
 			"columnDelimiter": ",",
