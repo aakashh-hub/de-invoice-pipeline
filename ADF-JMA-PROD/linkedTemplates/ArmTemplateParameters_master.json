@@ -1,0 +1,33 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "ADF-JMA-PROD"
+		},
+		"AzureBlobStorageLS_connectionString": {
+			"value": ""
+		},
+		"LS_AzureBlobStorage_connectionString": {
+			"value": ""
+		},
+		"LS_Snowflake_password": {
+			"value": ""
+		},
+		"SnowflakeV1_connectionString": {
+			"value": ""
+		},
+		"AzureKeyVaultForSnowflake_properties_typeProperties_baseUrl": {
+			"value": "https://AzureKeyVaultManager.vault.azure.net/"
+		},
+		"LS_Snowflake_properties_typeProperties_database": {
+			"value": "INVOICE"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
