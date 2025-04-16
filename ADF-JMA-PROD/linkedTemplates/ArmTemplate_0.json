@@ -11,10 +11,6 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorageLS'"
 		},
-		"LS_AzureBlobStorage_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'LS_AzureBlobStorage'"
-		},
 		"LS_Snowflake_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'LS_Snowflake'"
@@ -26,6 +22,10 @@
 		"AzureKeyVaultForSnowflake_properties_typeProperties_baseUrl": {
 			"type": "string",
 			"defaultValue": "https://AzureKeyVaultManager.vault.azure.net/"
+		},
+		"LS_AzureBlobStorage_sasUri": {
+			"type": "secureString",
+			"metadata": "Secure string for 'sasUri' of 'LS_AzureBlobStorage'"
 		},
 		"LS_Snowflake_properties_typeProperties_database": {
 			"type": "string",
@@ -166,7 +166,7 @@
 				"annotations": [],
 				"type": "AzureBlobStorage",
 				"typeProperties": {
-					"connectionString": "[parameters('LS_AzureBlobStorage_connectionString')]"
+					"sasUri": "[parameters('LS_AzureBlobStorage_sasUri')]"
 				}
 			},
 			"dependsOn": []
@@ -220,6 +220,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
+						"fileName": "invoices_dataset.csv",
 						"container": "invoice-container"
 					},
 					"columnDelimiter": ",",
@@ -568,6 +569,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
+						"fileName": "Invoice_data.csv",
 						"container": "invoice-container"
 					},
 					"columnDelimiter": ",",
@@ -916,7 +918,7 @@
 				"schema": [],
 				"typeProperties": {
 					"schema": "STAGING",
-					"table": "INVOICE"
+					"table": "invoice_data"
 				}
 			},
 			"dependsOn": [
@@ -945,6 +947,77 @@
 				"schema": []
 			},
 			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LS_AzureBlobStorage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PL_BlobToSnowflake')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "SnowflakeV2Sink",
+								"importSettings": {
+									"type": "SnowflakeImportCopyCommand"
+								}
+							},
+							"enableStaging": true,
+							"stagingSettings": {
+								"linkedServiceName": {
+									"referenceName": "LS_AzureBlobStorage",
+									"type": "LinkedServiceReference"
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "DS_BlobCSV",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DS_Snowflake_Invoice",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/DS_BlobCSV')]",
+				"[concat(variables('factoryId'), '/datasets/DS_Snowflake_Invoice')]",
 				"[concat(variables('factoryId'), '/linkedServices/LS_AzureBlobStorage')]"
 			]
 		},
@@ -1057,15 +1130,59 @@
 								"type": "Expression"
 							}
 						}
+					},
+					{
+						"name": "Get Metadata of column names",
+						"type": "GetMetadata",
+						"dependsOn": [
+							{
+								"activity": "Filter_Excel_Files",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataset": {
+								"referenceName": "BlobCSVDataset",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"fieldList": [
+								"structure"
+							],
+							"storeSettings": {
+								"type": "AzureBlobStorageReadSettings",
+								"recursive": true,
+								"enablePartitionDiscovery": false
+							},
+							"formatSettings": {
+								"type": "DelimitedTextReadSettings"
+							}
+						}
 					}
 				],
 				"policy": {
 					"elapsedTimeMetric": {}
 				},
+				"variables": {
+					"columnDefs": {
+						"type": "String"
+					}
+				},
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/DS_BlobCSV')]"
+				"[concat(variables('factoryId'), '/datasets/DS_BlobCSV')]",
+				"[concat(variables('factoryId'), '/datasets/BlobCSVDataset')]"
 			]
 		}
 	]
